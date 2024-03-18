@@ -1,0 +1,27 @@
+name: Docker Image CI GO AZ SSE
+
+on:
+  push:
+    branches: [ "master" ]
+env:
+  IMAGE_NAME: go_az_sse
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build image
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
+
+      - name: Log in to registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+
+      - name: 'Build Inventory Image'
+        run: |
+          docker build . --tag ghcr.io/${{github.repository_owner}}/$IMAGE_NAME:latest
+          docker push ghcr.io/${{github.repository_owner}}/$IMAGE_NAME:latest
