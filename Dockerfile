@@ -2,7 +2,7 @@
 FROM golang:1.22.0-alpine AS builder
 WORKDIR /app
 COPY . .
-RUN go build -o main main.go
+RUN go build -o main cmd/main.go
 
 # Ejecutar imagen
 FROM alpine
