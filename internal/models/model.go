@@ -20,11 +20,11 @@ type Ride struct {
 	} `json:"destination"`
 	DepartureTime  time.Time `json:"departure_time"`
 	ArrivalTime    time.Time `json:"arrival_time"`
-	Fare           int       `json:"fare"`
+	Fare           float64   `json:"fare"`
 	Distance       float64   `json:"distance"`
-	Duration       int       `json:"duration"`
+	Duration       float64   `json:"duration"`
 	VehicleType    string    `json:"vehicle_type"`
-	RecomendedFare int       `json:"recomended_fare"`
+	RecomendedFare float64   `json:"recomended_fare"`
 	Id             string    `json:"id"`
 	UpdatedAt      time.Time `json:"updated_at"`
 	CreatedAt      time.Time `json:"created_at"`
