@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/joho/godotenv"
 	"log"
 	"main/internal/events"
 	"main/internal/webhooks"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -13,6 +15,14 @@ func main() {
 	http.HandleFunc("/events/{ID}", events.SendEventsID)
 	http.HandleFunc("/webhook", webhooks.HandleWebhook)
 	http.HandleFunc("/webhook/{ID}", webhooks.HandleWebhookID)
-	fmt.Println("Server running on port http://localhost:8060")
-	log.Fatal(http.ListenAndServe(":8060", nil))
+
+	err := godotenv.Load()
+	if err != nil {
+		panic(err)
+	}
+
+	AppPort := os.Getenv("APP_PORT")
+
+	fmt.Println("Server running on port http://localhost:" + AppPort)
+	log.Fatal(http.ListenAndServe(":"+AppPort, nil))
 }
